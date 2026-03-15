@@ -608,8 +608,8 @@ $(document).ready(function(){
                                     <a class="btn" href="portfolio.html">+</a>
                                 </div>
                                 <div class="blog-meta">
-                                    <p>Por<a href="">Admin</a></p>
-                                    <p>En<a href="">Construcción</a></p>
+                                    <p>Por Admin</p>
+                                    
                                 </div>
                                 <div class="blog-text">
                                     <p>
@@ -627,8 +627,8 @@ Un concepto de edificio residencial contemporáneo que destaca un diseño sosten
                                     <a class="btn" href="portfolio.html">+</a>
                                 </div>
                                 <div class="blog-meta">
-                                    <p>Por<a href="">Admin</a></p>
-                                    <p>En<a href="">Construcción</a></p>
+                                    <p>Por Admin</p>
+                                    
                                 </div>
                                 <div class="blog-text">
                                     <p>
@@ -646,8 +646,8 @@ Diseñado para empresas modernas, este concepto de espacio comercial se centra e
                                     <a class="btn" href="portfolio.html">+</a>
                                 </div>
                                 <div class="blog-meta">
-                                    <p>Por<a href="">Admin</a></p>
-                                    <p>En<a href="">Construcción</a></p>
+                                    <p>Por Admin</p>
+                                    
                                 </div>
                                 <div class="blog-text">
                                     <p>
@@ -710,10 +710,19 @@ Una instalación industrial conceptual centrada en la eficiencia, la seguridad y
                                 <h2>Boletín</h2>
                                 <p>
 Recibe nuestras noticias y proyectos directamente por email.                                </p>
-                                <div class="form">
-                                    <input class="form-control" placeholder="Email here">
-                                    <button class="btn">Enviar</button>
-                                </div>
+                                <form id="subscribeForm" action="https://formspree.io/f/xzdjakye" method="POST">
+    <div class="form">
+        <input class="form-control" 
+               type="email" 
+               name="email" 
+               placeholder="Email here" 
+               required>
+
+        <button class="btn" type="submit">Enviar</button>
+    </div>
+</form>
+
+<div id="subscribe-success"></div>
                             </div>
                         </div>
                     </div>
@@ -754,5 +763,43 @@ Recibe nuestras noticias y proyectos directamente por email.                    
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+		<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("subscribeForm");
+    const successDiv = document.getElementById("subscribe-success");
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                successDiv.innerHTML = '<div class="alert alert-success">Thank you! Email sent successfully.</div>';
+                form.reset();
+
+                setTimeout(() => {
+                    successDiv.innerHTML = "";
+                }, 5000);
+
+            } else {
+                successDiv.innerHTML = '<div class="alert alert-danger">Oops! Something went wrong.</div>';
+            }
+
+        } catch (error) {
+            successDiv.innerHTML = '<div class="alert alert-danger">Oops! Something went wrong.</div>';
+        }
+
+    });
+
+});
+</script>
     </body>
 </html>
